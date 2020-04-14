@@ -22,4 +22,9 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 
+	//Moves Barrel to Crosshair
+	void AimTowardsCrosshair();
+
+	//Return an OUT Parameter, True if hit Landscape
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 };
