@@ -6,6 +6,13 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+	
+
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 	auto PlayerTank = GetPlayerTank();
 
 	if (!PlayerTank)
@@ -17,11 +24,6 @@ void ATankAIController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("AI Targetting: %s"), *(PlayerTank->GetName()));
 	}
 
-}
-
-void ATankAIController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 	if (GetPlayerTank())
 	{
 		//Move Towards the player
