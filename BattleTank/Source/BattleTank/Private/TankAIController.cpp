@@ -21,7 +21,7 @@ void ATankAIController::Tick(float DeltaTime)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AI Targetting: %s"), *(PlayerTank->GetName()));
+		//UE_LOG(LogTemp, Warning, TEXT("AI Targetting: %s"), *(PlayerTank->GetName()));
 	}
 
 	if (GetPlayerTank())
