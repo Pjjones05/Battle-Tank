@@ -8,6 +8,7 @@
 
 
 class UTankBarrel;
+class UTurret;
 class UTankAimingComponent;
 
 //Hold Barrel's Properties and Elevate Methods
@@ -21,6 +22,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTurret* TurretToSet);
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
