@@ -16,14 +16,14 @@ class BATTLETANK_API UTankBarrel : public UStaticMeshComponent
 public:
 	// -1 is max downward movement and +1 is max up speed
 	void Elevate(float RelativeSpeed);
-	void Elevation(float MinDegrees, float MaxDegrees);
+	
 	
 	
 private:
 	UPROPERTY(EditAnywhere)
-	float MaxDegreesPerScond = 20; //change to sensible value 
+	float MaxDegreesPerScond = 5; //change to sensible value 
 	UPROPERTY(EditAnywhere)
-	float MaxDegrees = 40;
+	float MaxDegrees = 45;
 	UPROPERTY(EditAnywhere)
 	float MinDegrees = 0;
 
