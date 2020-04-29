@@ -10,6 +10,7 @@
 class UTankBarrel;
 class UTurret;
 class UTankAimingComponent;
+class AProjectile;
 
 //Hold Barrel's Properties and Elevate Methods
 UCLASS()
@@ -45,4 +46,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float LaunchSpeed = 10000; // CHANGE TO REAL VALUE
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+		TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UTankBarrel* Barrel = nullptr;
+
 };
