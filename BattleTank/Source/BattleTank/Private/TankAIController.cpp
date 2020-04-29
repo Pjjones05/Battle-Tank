@@ -18,7 +18,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (!PlayerTank)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AI cannot find PlayerTank!"));
+		//UE_LOG(LogTemp, Warning, TEXT("AI cannot find PlayerTank!"));
 	}
 	else
 	{
