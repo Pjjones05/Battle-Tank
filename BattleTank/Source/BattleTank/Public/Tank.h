@@ -30,6 +30,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
+	
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
@@ -44,14 +45,18 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 10000; // CHANGE TO REAL VALUE
-
 	UPROPERTY(EditAnywhere, Category = Setup)
-		TSubclassOf<AProjectile> ProjectileBlueprint;
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float LaunchSpeed = 4000; // CHANGE TO REAL VALUE
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing) //Could Crash Game in 4.18
+	float ReloadTimeInSeconds = 3;
+
+	
 
 	UTankBarrel* Barrel = nullptr;
-
-	float ReloadTimeInSeconds = 3;
+	
 	double LastFireTime = 0;
 };
