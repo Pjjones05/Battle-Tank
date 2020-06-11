@@ -10,7 +10,9 @@
 class UTankBarrel;
 class UTurret;
 class UTankAimingComponent;
+class UTankMovementComp;
 class AProjectile;
+
 
 //Hold Barrel's Properties and Elevate Methods
 UCLASS()
@@ -30,9 +32,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
-	
+		
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+		UTankMovementComp* TankMovementComp = nullptr;
 
 private:
 	// Sets default values for this pawn's properties

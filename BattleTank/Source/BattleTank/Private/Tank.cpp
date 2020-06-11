@@ -4,6 +4,7 @@
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "TankAimingComponent.h"
+#include "TankMovementComp.h"
 
 
 // Sets default values
@@ -13,7 +14,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-
+	TankMovementComp = CreateDefaultSubobject<UTankMovementComp>(FName("Movement Component"));
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +60,10 @@ void ATank::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 			);
 
+		if (!Projectile) 
+		{
+			UE_LOG(LogTemp, Error, TEXT("Reset Projectile in Tank Blueprint parameters."))
+			return; }
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
