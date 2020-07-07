@@ -1,9 +1,24 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankMovementComp.h"
+#include "TankTrack.h"
+#include "Tank.h"
+
+
+void UTankMovementComp::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
+{
+	if (!LeftTrackToSet || !RightTrackToSet) { return; }
+	{
+		LeftTrack = LeftTrackToSet;
+		RightTrack = RightTrackToSet;
+	}
+}
 
 void UTankMovementComp::IntendMoveForward(float Throw)
 
 {
-	UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
+	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(Throw);
+	//TODO Prevent double speed A+D+W
 }
