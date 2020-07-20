@@ -21,7 +21,7 @@ void UTankMovementComp::IntendMoveForward(float Throw)
 	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	//TODO Prevent double speed A+D+W
+
 }
 
 void UTankMovementComp::IntendTurnRight(float Throw)
@@ -31,5 +31,22 @@ void UTankMovementComp::IntendTurnRight(float Throw)
 	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	//TODO Prevent double speed A+D+W
+	
 }
+
+void UTankMovementComp::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	//No need to call Super, replacing funtionality 
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+
+	auto ForwardThrow =	FVector::DotProduct(TankForward, AIForwardIntention);
+	IntendMoveForward(ForwardThrow);
+
+	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+	IntendTurnRight(RightThrow);
+
+	//UE_LOG(LogTemp,Warning,TEXT("%s vectoring to %s"), *TankName, *MoveVelocityString)
+
+}
+
