@@ -11,7 +11,7 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	auto ControlledTank = GetControlledTank();
-
+	//UE_LOG(LogTemp, Warning, TEXT("DONKEY: TankPlayerController.CPP"));
 	if (!ControlledTank)
 	{
 		//UE_LOG(LogTemp, Warning, TEXT("PlayerController Not Possesing a tank!"));

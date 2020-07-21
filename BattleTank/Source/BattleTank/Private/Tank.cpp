@@ -17,14 +17,15 @@ ATank::ATank()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	Super::BeginPlay();
-	
+	Super::BeginPlay();//NEEDED FOR BP BEGIN PLAY
+	//UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank.cpp"));
 }
 
 // Called to bind functionality to input
 
 void ATank::AimAt(FVector OutHitLocation)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->AimAt(OutHitLocation, LaunchSpeed);
 }
 
@@ -42,7 +43,7 @@ void ATank::Fire()
 
 		if (!Projectile) 
 		{
-			UE_LOG(LogTemp, Error, TEXT("Reset Projectile in Tank Blueprint parameters."))
+			//UE_LOG(LogTemp, Error, TEXT("Reset Projectile in Tank Blueprint parameters."))
 			return; }
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
