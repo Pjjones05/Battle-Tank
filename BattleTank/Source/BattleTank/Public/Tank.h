@@ -21,23 +21,18 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTurret* TurretToSet);
-
 	void AimAt(FVector OutHitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Firing)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
 		
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
-		UTankMovementComp* TankMovementComp = nullptr;
+	UTankMovementComp* TankMovementComp = nullptr;
 
 private:
 	// Sets default values for this pawn's properties
@@ -46,22 +41,16 @@ private:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditAnywhere, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
+	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000; // CHANGE TO REAL VALUE
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing) //Could Crash Game in 4.18
+	UPROPERTY(EditDefaultsOnly, Category = "Firing") //Could Crash Game in 4.18
 	float ReloadTimeInSeconds = 3;
-
 	
+	UTankBarrel* Barrel = nullptr; //TODO Remove
 
-	UTankBarrel* Barrel = nullptr;
-	
 	double LastFireTime = 0;
 };
