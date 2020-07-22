@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "BattleTank.h"
 
 
@@ -10,17 +11,13 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto ControlledTank = GetControlledTank();
-	//UE_LOG(LogTemp, Warning, TEXT("DONKEY: TankPlayerController.CPP"));
-	if (!ControlledTank)
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent)
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("PlayerController Not Possesing a tank!"));
+		FoundAimingComponent(AimingComponent);
 	}
 	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("PlayerController possessing: %s"), *(ControlledTank->GetName()));
-	}
-	
+	{UE_LOG(LogTemp, Warning, TEXT("Player Controller can't find Aiming Component at Begin Play")) }
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
