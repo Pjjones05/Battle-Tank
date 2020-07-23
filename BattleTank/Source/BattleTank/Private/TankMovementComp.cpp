@@ -17,7 +17,7 @@ void UTankMovementComp::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* Right
 void UTankMovementComp::IntendMoveForward(float Throw)
 
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
@@ -27,7 +27,7 @@ void UTankMovementComp::IntendMoveForward(float Throw)
 void UTankMovementComp::IntendTurnRight(float Throw)
 
 {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
