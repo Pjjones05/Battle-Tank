@@ -18,6 +18,8 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();//NEEDED FOR BP BEGIN PLAY
 	//UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank.cpp"));
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called to bind functionality to input
@@ -26,6 +28,7 @@ void ATank::AimAt(FVector OutHitLocation)
 {
 	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(OutHitLocation, LaunchSpeed);
+	
 }
 
 void ATank::Fire()
