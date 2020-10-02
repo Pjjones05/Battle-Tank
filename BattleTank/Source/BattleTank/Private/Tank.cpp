@@ -22,22 +22,3 @@ void ATank::BeginPlay()
 
 // Called to bind functionality to input
 
-void ATank::Fire()
-{
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (Barrel && isReloaded) 
-	{
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
-
-		if (!ensure(Projectile)) 
-		{
-			//UE_LOG(LogTemp, Error, TEXT("Reset Projectile in Tank Blueprint parameters."))
-			return; }
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
