@@ -3,7 +3,6 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
 
 
 // Sets default values
@@ -19,17 +18,9 @@ void ATank::BeginPlay()
 	Super::BeginPlay();//NEEDED FOR BP BEGIN PLAY
 	//UE_LOG(LogTemp, Warning, TEXT("DONKEY: Tank.cpp"));
 
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 // Called to bind functionality to input
-
-void ATank::AimAt(FVector OutHitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-	TankAimingComponent->AimAt(OutHitLocation, LaunchSpeed);
-	
-}
 
 void ATank::Fire()
 {
@@ -47,7 +38,6 @@ void ATank::Fire()
 		{
 			//UE_LOG(LogTemp, Error, TEXT("Reset Projectile in Tank Blueprint parameters."))
 			return; }
-		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
