@@ -13,9 +13,23 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false; //Is this needed?
+	PrimaryComponentTick.bCanEverTick = true; 
 
 	// ...
+}
+
+void UTankAimingComponent::BeginPlay()
+{
+	//first fire after initial reload
+	LastFireTime = FPlatformTime::Seconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	if ((FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reload;
+	}
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTurret* TurretToSet)
@@ -70,21 +84,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 void UTankAimingComponent::Fire()
 {
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (Barrel && isReloaded)
+	if (FiringState != EFiringState::Reload)
 	{
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(ProjectileBlueprint)) { return; }
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
 			Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile"))
 			);
 
-		if (!ensure(Projectile))
-		{
-			//UE_LOG(LogTemp, Error, TEXT("Reset Projectile in Tank Blueprint parameters."))
-			return;
-		}
+		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
