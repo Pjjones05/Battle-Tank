@@ -1,9 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "TankTrack.h"
-#include "Tank.h"
 #include "BattleTank.h"
 
+UTankTrack::UTankTrack()
+{
+	PrimaryComponentTick.bCanEverTick = true;
+}
+
+void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Tank Tick Test"))
+	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity()); //Slippage Speed
+	auto CorrectionAccel = -SlippageSpeed / DeltaTime * GetRightVector(); //Acceleration to Correct slippage
+	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	auto CorrectionForce = TankRoot->GetMass() * CorrectionAccel / 2; //Two Tracks
+	TankRoot->AddForce(CorrectionForce);
+}
 
 void UTankTrack::SetThrottle(float Throttle)
 {

@@ -17,7 +17,7 @@ public:
 	AProjectile();
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	void LaunchProjectile(float Speed);
+	void LaunchProjectile(float LaunchSpeed);
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
