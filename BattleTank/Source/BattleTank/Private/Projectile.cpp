@@ -6,10 +6,28 @@
 // Sets default values
 AProjectile::AProjectile()
 {
+
+
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
+	/*// Use a sphere as a simple collision representation. Added,
+	CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
+	// Set the sphere's collision radius. Added.
+	CollisionComponent->InitSphereRadius(15.0f);
+	// Set the root component to be the collision component. Added.
+	RootComponent = CollisionComponent;*/
+
+	// Use this component to drive this projectile's movement. Added.
+	/*ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+	ProjectileMovement->SetUpdatedComponent(USceneComponent *RootComponent);
+	ProjectileMovement->InitialSpeed = 3000.0f;
+	ProjectileMovement->MaxSpeed = 3000.0f;
+	ProjectileMovement->bRotationFollowsVelocity = true;
+	ProjectileMovement->bShouldBounce = true;
+	ProjectileMovement->Bounciness = 0.3f;*/
+
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("ProjectileMovement"));
 	ProjectileMovement->bAutoActivate = false;
 }
 
@@ -29,8 +47,9 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile(float LaunchSpeed)
 {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f Fire at %f."), Time, LaunchSpeed);
+	//auto Time = GetWorld()->GetTimeSeconds();
+	//UE_LOG(LogTemp, Warning, TEXT("%f Fire at %f."), Time, LaunchSpeed);
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * LaunchSpeed);
 	ProjectileMovement->Activate();
 }
+
