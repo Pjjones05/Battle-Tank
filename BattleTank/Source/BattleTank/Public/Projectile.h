@@ -7,7 +7,6 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
-
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
 {
@@ -19,20 +18,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void LaunchProjectile(float LaunchSpeed);
-
-	// Sphere collision component. Added.
-	//UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
-	//USphereComponent* CollisionComponent;
-
-	// Projectile movement component. Added.
-	UPROPERTY(VisibleAnywhere, Category = Movement)
-	UProjectileMovementComponent* ProjectileMovement;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
-	//UProjectileMovementComponent* ProjectileMovement = nullptr;
+	UProjectileMovementComponent* ProjectileMovement = nullptr;
 	
 };
