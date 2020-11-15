@@ -6,7 +6,7 @@
 
 UTankTrack::UTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankTrack::BeginPlay()
@@ -17,12 +17,17 @@ void UTankTrack::BeginPlay()
 
 void UTankTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Hit"))
+	DriveTrack();
+	ApplySidewaysForce();
+	CurrentThrottle = 0;
 }
-void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+
+void UTankTrack::ApplySidewaysForce()
 {
+	
 	//UE_LOG(LogTemp, Warning, TEXT("Tank Tick Test"))
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity()); //Slippage Speed
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
 	auto CorrectionAccel = -SlippageSpeed / DeltaTime * GetRightVector(); //Acceleration to Correct slippage
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto CorrectionForce = TankRoot->GetMass() * CorrectionAccel / 2; //Two Tracks
@@ -31,15 +36,18 @@ void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActor
 
 void UTankTrack::SetThrottle(float Throttle)
 {
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+}
+
+void UTankTrack::DriveTrack()
+{
 	auto Name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("%s: throttle: %f"), *Name, Throttle);
+	//UE_LOG(LogTemp, Warning, TEXT("%s: throttle: %f"), *Name, CurrentThrottle)
 
 	//to do CLAMP throttle value, so player can't cheat settings
 
-	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-
 }
-
